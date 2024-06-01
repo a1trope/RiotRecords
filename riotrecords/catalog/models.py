@@ -6,6 +6,7 @@ class Item(models.Model):
     band_name = models.CharField(max_length=150)
     price = models.IntegerField()
     year = models.IntegerField()
+    image = models.CharField(max_length=300)
 
     def __str__(self):
         return f"{self.album_name} - {self.band_name}"
