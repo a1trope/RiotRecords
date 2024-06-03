@@ -110,7 +110,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/catalog/'
+LOGIN_REDIRECT_URL = '/catalog'
+LOGOUT_REDIRECT_URL = '/catalog'
 
 
 # Internationalization

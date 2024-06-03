@@ -15,7 +15,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <li class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="#" id="cart">
@@ -23,10 +23,16 @@
                     </a>
                 </li>
                 {% if user.is_authenticated %}
+                    <li class="nav-item nav-link">
+                        Hello, {{ user }}!
+                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}" id="logout">
-                            Выйти
-                        </a>
+                        <form class="nav-link" action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit">
+                                Выйти
+                            </button>
+                        </form>
                     </li>
                 {% else %}
                     <li class="nav-item">
