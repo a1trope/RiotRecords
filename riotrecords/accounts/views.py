@@ -12,8 +12,9 @@ def login_user(request):
             login(request, user)
             return redirect("catalog:index")
         else:
-            # TODO: show errors if can't find user
-            return render(request, "accounts/login.html")
+            return render(request, "accounts/login.html", context={
+                "error_msg": f"Пользователя \"{username}\" с данным паролем не существует. Попробуйте ещё раз."
+            })
 
     return render(request, "accounts/login.html")
 
