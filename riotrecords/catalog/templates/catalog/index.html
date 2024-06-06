@@ -1,83 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RiotRecords - Виниловые пластинки</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+{% extends "catalog/base.html" %}
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="">RiotRecords</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <li class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#" id="cart">
-                        Корзина
-                    </a>
-                </li>
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'accounts:logout' %}">
-                            Выйти
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'accounts:login' %}">
-                            Войти
-                        </a>
-                    </li>
-                {% endif %}
-            </ul>
-        </li>
-    </nav>
+{% block content %}
 
-    <!-- Main Content -->
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col text-center">
-                {% if user.is_authenticated %}
-                    <h1>Здравствуйте, {{ user.get_username }}!</h1>
-                {% else %}
-                    <h1>Добро пожаловать в RiotRecords!</h1>
-                {% endif %}
-                <p>Здесь вы найдете лучшие виниловые пластинки.</p>
-            </div>
-        </div>
-        <div class="row mt-4">
-            {% for item in Items %}
-            <!-- Album card -->
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <img src="{{ item.image }}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ item.album_name }}</h5>
-                        <p class="card-text">Исполнитель: {{ item.band_name }}</p>
-                        <button class="btn btn-primary add-to-cart">Добавить в корзину</button>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col text-center">
+            {% if user.is_authenticated %}
+                <h1>Здравствуйте, {{ user.get_username }}!</h1>
+            {% else %}
+                <h1>Добро пожаловать в RiotRecords!</h1>
+            {% endif %}
+            <p>Здесь вы найдете лучшие виниловые пластинки.</p>
         </div>
     </div>
+    <div class="row mt-4">
+        {% for item in Items %}
+        <!-- Album card -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{{ item.image }}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.album_name }}</h5>
+                    <p class="card-text">Исполнитель: {{ item.band_name }}</p>
+                    <button class="btn btn-primary add-to-cart">Добавить в корзину</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
-
-    <!-- Footer -->
-    <footer class="bg-dark text-white mt-5 p-4 text-center">
-        <p>© 2024 RiotRecords</p>
-    </footer>
-
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-</body>
-</html>
+{% endblock content %}
