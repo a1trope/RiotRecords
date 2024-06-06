@@ -23,41 +23,31 @@
                     </a>
                 </li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item nav-link">
-                        Hello, {{ user }}!
-                    </li>
                     <li class="nav-item">
-                        <form class="nav-link" action="{% url 'logout' %}" method="post">
-                            {% csrf_token %}
-                            <button type="submit">
-                                Выйти
-                            </button>
-                        </form>
+                        <a class="nav-link" href="{% url 'accounts:logout' %}">
+                            Выйти
+                        </a>
                     </li>
                 {% else %}
-                    {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accounts:logout' %}">
-                                Выйти
-                            </a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'accounts:login' %}">
-                                Войти
-                            </a>
-                        </li>
-                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'accounts:login' %}">
+                            Войти
+                        </a>
+                    </li>
                 {% endif %}
             </ul>
-        </div>
+        </li>
     </nav>
 
     <!-- Main Content -->
     <div class="container mt-5">
         <div class="row">
             <div class="col text-center">
-                <h1>Добро пожаловать в RiotRecords!</h1>
+                {% if user.is_authenticated %}
+                    <h1>Здравствуйте, {{ user.get_username }}!</h1>
+                {% else %}
+                    <h1>Добро пожаловать в RiotRecords!</h1>
+                {% endif %}
                 <p>Здесь вы найдете лучшие виниловые пластинки.</p>
             </div>
         </div>
