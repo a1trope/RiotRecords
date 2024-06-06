@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Вход</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -19,7 +19,7 @@
                               {{ error_msg }}
                             </div>
                         {% endif %}
-                        <form method="post">
+                        <form method="post" action="{% url 'accounts:login' %}">
                             {% csrf_token %}
                             <div class="form-group">
                                 <input name="username" class="form-control" placeholder="Имя пользователя">
@@ -29,7 +29,10 @@
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Войти</button>
                         </form>
-                        {{ form.errors }}
+
+                        <div>
+                            Нет аккаунта? <a href="{% url 'accounts:register' %}">Зарегестрироваться</a>
+                        </div>
                     </div>
                 </div>
             </div>
