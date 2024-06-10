@@ -19,7 +19,7 @@
         <div class="col-md-4">
             <div class="card mb-4">
                 <img src="{{ item.image }}" class="card-img-top">
-                <div class="card-body">
+                <div class="card-body" id="{{ item.id }}">
                     <h5 class="card-title">{{ item.album_name }}</h5>
                     <p class="card-text">Исполнитель: {{ item.band_name }}</p>
                     <button class="btn btn-primary add-to-cart">Добавить в корзину</button>
