@@ -15,17 +15,18 @@ class Item(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=30, choices=[
+    ORDER_STATUS = [
         ("PD", "pending"),
         ("PR", "processing"),
         ("SH", "shipped"),
         ("DE", "delivered"),
-    ])
+    ]
+    status = models.CharField(max_length=30, choices=ORDER_STATUS)
     address = models.CharField(max_length=200)
     time = models.DateTimeField()
 
     def __str__(self):
-        return f"order {self.id} (user={self.user})"
+        return f"Order {self.id} (user={self.user})"
 
 
 class OrderItem(models.Model):
