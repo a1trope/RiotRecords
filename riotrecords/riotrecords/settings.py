@@ -111,10 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/catalog'
-LOGOUT_REDIRECT_URL = '/catalog'
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
