@@ -12,7 +12,7 @@ def login_user(request):
 
         if user is not None:
             login(request, user)
-            if user.is_superuser:
+            if user.is_staff:
                 return redirect("/admin")
             else:
                 return redirect("catalog:index")
