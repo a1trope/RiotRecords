@@ -7,7 +7,7 @@ class ItemAdmin(admin.ModelAdmin):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ["user_id", "status", "address", "time"]
+    list_display = ["id", "user", "status", "address", "time"]
 
 
 class OrderItemAdmin(admin.ModelAdmin):
