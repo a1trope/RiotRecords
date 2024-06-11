@@ -15,12 +15,12 @@ class Item(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    ORDER_STATUS = [
-        ("PD", "pending"),
-        ("PR", "processing"),
-        ("SH", "shipped"),
-        ("DE", "delivered"),
-    ]
+    ORDER_STATUS = {
+        "PD": "pending",
+        "PR": "processing",
+        "SH": "shipped",
+        "DE": "delivered",
+    }
     status = models.CharField(max_length=30, choices=ORDER_STATUS)
     address = models.CharField(max_length=200)
     time = models.DateTimeField()
