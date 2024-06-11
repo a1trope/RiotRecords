@@ -3,9 +3,15 @@ from django.shortcuts import render
 
 
 def get_total_sales(request):
-    # TODO
-    # Return total sales for the last month
-    return HttpResponse()
+    labels = []
+    data = []
+
+    # TODO: Get all sales from database
+
+    return render(request, "stats/charts.html", context={
+        "labels": labels,
+        "data": data
+    })
 
 
 def get_item_sales(request, item_id):
