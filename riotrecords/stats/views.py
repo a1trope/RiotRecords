@@ -1,10 +1,12 @@
 from django.http import JsonResponse, HttpResponse
+from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render
 from django.db.models.functions import TruncDay, TruncMonth
 from django.db.models import Count
 import catalog.models
 
 
+@staff_member_required(login_url="accounts:login", redirect_field_name='next')
 def get_total_sales(request):
     # В orders хранится пары <дата с точностью до дня, сколько заказов выполнено в этот день>
     orders = (catalog.models.Order.objects
@@ -29,6 +31,7 @@ def get_total_sales(request):
     })
 
 
+@staff_member_required(login_url="accounts:login", redirect_field_name='next')
 def get_item_sales(request, item_id):
     # Orders with specified item
     orders_id = (catalog.models.OrderItem.objects
