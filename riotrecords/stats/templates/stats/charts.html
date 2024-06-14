@@ -1,3 +1,6 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
 <div>
   <h1>Labels</h1>
   Labels: [{% for label in labels %} "{{label}}", {% endfor %}]
@@ -36,3 +39,4 @@
     }
   });
 </script>
+{% endblock %}
