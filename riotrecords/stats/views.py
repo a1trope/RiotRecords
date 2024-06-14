@@ -9,30 +9,37 @@ import catalog.models
 # # Get all sales (delivered orders) from database
 # orders = (catalog.models.Order.objects
 #           .filter(status="DE")
-#           .annotate(day_time=TruncDay("time"))
-#           .values("day_time")
-#           .annotate(dcount=Count("day_time"))
-#               )
+#           .annotate(date=TruncDay("time"))
+#           .values("date")
+#           .annotate(dcount=Count("date"))
+#           )
 #
 # for order in orders:
 #     print(order)
-#
-# # print(orders)
+
 #
 # print("------------------------------------------------\n\n")
 
 
 def get_total_sales(request):
+
+    # В orders хранится пары <дата с точностью до дня, сколько заказов выполнено в этот день>
+    orders = (catalog.models.Order.objects
+              .filter(status="DE")
+              .annotate(date=TruncDay("time"))
+              .values("date")
+              .annotate(sale_count=Count("date"))
+              )
+
     labels = []
     data = []
 
-    # В данной хранится пары <дата с точностью до дня, сколько заказов выполнено в этот день>
-    orders = (catalog.models.Order.objects
-              .filter(status="DE")
-              .annotate(day_time=TruncDay("time"))
-              .values("day_time")
-              .annotate(dcount=Count("day_time"))
-              )
+    for order in orders:
+        date = order["date"].strftime("%D")
+        sale_count = order["sale_count"]
+        labels.append(date)
+        data.append(sale_count)
+
 
     return render(request, "stats/charts.html", context={
         "labels": labels,

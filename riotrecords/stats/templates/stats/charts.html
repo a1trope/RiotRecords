@@ -1,25 +1,12 @@
 <div>
   <h1>Labels</h1>
-  <ul>
-    <li>
-      {% for label in labels %}
-        label
-      {% endfor %}
-    </li>
-  </ul>
+  Labels: [{% for label in labels %} "{{label}}", {% endfor %}]
 </div>
 
 <div>
   <h1>Data</h1>
-  <ul>
-    <li>
-      {% for count in data %}
-        count
-      {% endfor %}
-    </li>
-  </ul>
+  Data: [{% for sale_count in data %} {{ sale_count }}, {% endfor %}]
 </div>
-
 
 <div>
   <canvas id="myChart"></canvas>
@@ -33,10 +20,10 @@
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: [{% for label in labels %} "{{label}}", {% endfor %}], // ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
       datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        label: 'Number of sales',
+        data: [{% for sale_count in data %} {{ sale_count }}, {% endfor %}], // [12, 19, 3, 5, 2, 3],
         borderWidth: 1
       }]
     },
