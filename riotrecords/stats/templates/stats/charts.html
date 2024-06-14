@@ -4,7 +4,7 @@
 
 <form action="{% url 'stats:get_total_sales' %}" method="post">
   {% csrf_token %}
-  {{ form }}
+  {{ form.as_p }}
   <input type="submit" value="Отрисовать чарт продаж">
 </form>
 

@@ -35,6 +35,8 @@ def get_total_sales(request):
 
 @staff_member_required(login_url="accounts:login", redirect_field_name='next')
 def get_item_sales(request, item_id):
+    # TODO: render new chart depend on form
+
     # Orders with specified item
     orders_id = (catalog.models.OrderItem.objects
                  .filter(item_id=item_id)
