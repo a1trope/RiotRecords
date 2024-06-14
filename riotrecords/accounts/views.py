@@ -5,6 +5,12 @@ from django.shortcuts import render, redirect
 
 
 def login_user(request):
+
+    error_msg = ""
+
+    if request.method == "GET" and request.GET.get("next") == "/stats/":
+        error_msg = "Данная секция доступна только администратора"
+
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
@@ -17,11 +23,11 @@ def login_user(request):
             else:
                 return redirect("catalog:index")
         else:
-            return render(request, "accounts/login.html", context={
-                "error_msg": f"Пользователя \"{username}\" с данным паролем не существует. Попробуйте ещё раз."
-            })
+            error_msg = f"Пользователя \"{username}\" с данным паролем не существует. Попробуйте ещё раз."
 
-    return render(request, "accounts/login.html")
+    return render(request, "accounts/login.html", context={
+        "error_msg": error_msg
+    })
 
 
 def logout_user(request):
