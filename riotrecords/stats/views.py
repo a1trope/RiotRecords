@@ -4,27 +4,6 @@ from django.db.models.functions import TruncDay, TruncMonth
 from django.db.models import Count
 import catalog.models
 
-print("\n\n----------- IN STATS VIEW TEST -----------------")
-
-# Get all sales (delivered orders) from database
-item_id = 8
-orders_id = (catalog.models.OrderItem.objects
-             .filter(item_id=item_id)
-             .values_list("order_id")
-             )
-
-orders = (catalog.models.Order.objects
-          .filter(id__in=orders_id, status="DE")
-          .annotate(date=TruncDay("time"))
-          .values("date")
-          .annotate(sale_count=Count("date"))
-          )
-
-for order in orders:
-    print(order)
-
-print("------------------------------------------------\n\n")
-
 
 def get_total_sales(request):
     # В orders хранится пары <дата с точностью до дня, сколько заказов выполнено в этот день>
