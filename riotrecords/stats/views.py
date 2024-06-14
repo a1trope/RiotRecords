@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.db.models.functions import TruncDay, TruncMonth
 from django.db.models import Count
 import catalog.models
+from .forms import ChartForm
 
 
 @staff_member_required(login_url="accounts:login", redirect_field_name='next')
@@ -27,7 +28,8 @@ def get_total_sales(request):
 
     return render(request, "stats/charts.html", context={
         "labels": labels,
-        "data": data
+        "data": data,
+        "form": ChartForm
     })
 
 
@@ -59,5 +61,6 @@ def get_item_sales(request, item_id):
     return render(request, "stats/charts.html", context={
         "labels": labels,
         "data": data,
-        "item_name": item_name
+        "item_name": item_name,
+        "form": ChartForm
     })

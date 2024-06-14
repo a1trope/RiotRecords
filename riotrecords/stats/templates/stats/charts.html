@@ -1,15 +1,12 @@
 {% extends "admin/base_site.html" %}
 
 {% block content %}
-<div>
-  <h1>Labels</h1>
-  Labels: [{% for label in labels %} "{{label}}", {% endfor %}]
-</div>
 
-<div>
-  <h1>Data</h1>
-  Data: [{% for sale_count in data %} {{ sale_count }}, {% endfor %}]
-</div>
+<form action="{% url 'stats:get_total_sales' %}" method="post">
+  {% csrf_token %}
+  {{ form }}
+  <input type="submit" value="Отрисовать чарт продаж">
+</form>
 
 <div>
   <canvas id="myChart"></canvas>
