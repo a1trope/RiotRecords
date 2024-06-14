@@ -22,7 +22,7 @@
     data: {
       labels: [{% for label in labels %} "{{label}}", {% endfor %}], // ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
       datasets: [{
-        label: 'Number of sales',
+        label: 'Total number of sales{% if item_name %} {{ item_name }} {% endif %}',
         data: [{% for sale_count in data %} {{ sale_count }}, {% endfor %}], // [12, 19, 3, 5, 2, 3],
         borderWidth: 1
       }]
