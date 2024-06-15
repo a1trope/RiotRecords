@@ -5,19 +5,25 @@
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 <!-- END Bootstrap -->
 
-
-<form action="{% url 'stats:get_total_sales' %}" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <input type="submit" value="Отрисовать чарт продаж">
-</form>
-
-<div class="d-flex justify-content-center align-items-center full-height">
+<!-- Chart -->
+<div class="d-flex justify-content-center align-items-center">
   <canvas id="myChart" width="800" height="300"></canvas>
 </div>
+<!-- END Chart -->
 
+<!-- Form -->
+<div class="d-flex justify-content-center align-items-center">
+  <form action="{% url 'stats:get_total_sales' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Отрисовать чарт продаж">
+  </form>
+</div>
+<!-- END Form -->
+
+
+<!-- Chart Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
   const ctx = document.getElementById('myChart');
 
@@ -41,6 +47,8 @@
     }
   });
 </script>
+<!-- END Chart Scripts -->
+
 
 <!-- Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

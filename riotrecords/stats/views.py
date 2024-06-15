@@ -1,10 +1,11 @@
 from django.http import JsonResponse, HttpResponse
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models.functions import TruncDay, TruncMonth
 from django.db.models import Count
 import catalog.models
 from .forms import ChartForm
+
 
 # print("--------------- TEST IN STATS ---------------")
 #
@@ -20,50 +21,89 @@ from .forms import ChartForm
 #
 # print("---------------------------------------------")
 
-
-@staff_member_required(login_url="accounts:login", redirect_field_name='next')
-def get_stats(request, item_id):
-
-    labels = []
-    data = []
-
-    return render(request, "stats/charts.html", context={
-        "labels": labels,
-        "data": data,
-        "form": ChartForm
-    })
-
-
+# TODO: refactor this
 @staff_member_required(login_url="accounts:login", redirect_field_name='next')
 def get_total_sales(request):
-    # TODO: Получить кол-во всех проданных предметов по дням, а не кол-во заказов
-    # В orders хранится пары <дата с точностью до дня, сколько заказов выполнено в этот день>
-    orders = (catalog.models.Order.objects
-              .filter(status="DE")
-              .annotate(date=TruncDay("time"))
-              .values("date")
-              .annotate(sale_count=Count("date"))
-              )
-
     labels = []
     data = []
+    form = ChartForm
 
-    for order in orders:
-        date = order["date"].strftime("%D")
-        sale_count = order["sale_count"]
-        labels.append(date)
-        data.append(sale_count)
+    if request.method == "GET":
+        # TODO: Получить кол-во всех проданных предметов по дням, а не кол-во заказов
+        # В orders хранится пары <дата с точностью до дня, сколько заказов выполнено в этот день>
+        orders = (catalog.models.Order.objects
+                  .filter(status="DE")
+                  .annotate(date=TruncDay("time"))
+                  .values("date")
+                  .annotate(sale_count=Count("date"))
+                  )
+
+        for order in orders:
+            date = order["date"].strftime("%D")
+            sale_count = order["sale_count"]
+            labels.append(date)
+            data.append(sale_count)
+
+    if request.method == "POST":
+        # Handle user form
+        form = ChartForm(request.POST)
+        item_id = int(request.POST["item_field"])
+
+        if item_id == 0:
+            orders = (catalog.models.Order.objects
+                      .filter(status="DE")
+                      .annotate(date=TruncDay("time"))
+                      .values("date")
+                      .annotate(sale_count=Count("date"))
+                      )
+
+            for order in orders:
+                date = order["date"].strftime("%D")
+                sale_count = order["sale_count"]
+                labels.append(date)
+                data.append(sale_count)
+        else:
+            orders_id = (catalog.models.OrderItem.objects
+                         .filter(item_id=item_id)
+                         .values_list("order_id")
+                         )
+
+            orders = (catalog.models.Order.objects
+                      .filter(id__in=orders_id, status="DE")
+                      .annotate(date=TruncDay("time"))
+                      .values("date")
+                      .annotate(sale_count=Count("date"))
+                      )
+
+            item_name = str(catalog.models.Item.objects.get(id=item_id))
+
+            for order in orders:
+                date = order["date"].strftime("%D")
+                sale_count = order["sale_count"]
+                labels.append(date)
+                data.append(sale_count)
+
+            return render(request, "stats/charts.html", context={
+                "labels": labels,
+                "data": data,
+                "item_name": item_name,
+                "form": form
+            })
 
     return render(request, "stats/charts.html", context={
         "labels": labels,
         "data": data,
-        "form": ChartForm
+        "form": form
     })
 
 
 @staff_member_required(login_url="accounts:login", redirect_field_name='next')
 def get_item_sales(request, item_id):
     # TODO: Получить кол-во проданного предмета по дням, а не кол-во заказов
+    form = ChartForm
+
+    if request.method == "POST":
+        form = ChartForm(request.POST)
 
     # Orders with specified item
     orders_id = (catalog.models.OrderItem.objects
@@ -92,5 +132,5 @@ def get_item_sales(request, item_id):
         "labels": labels,
         "data": data,
         "item_name": item_name,
-        "form": ChartForm
+        "form": form
     })
