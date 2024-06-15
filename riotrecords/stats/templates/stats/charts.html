@@ -32,7 +32,7 @@
     data: {
       labels: [{% for label in labels %} "{{label}}", {% endfor %}],
       datasets: [{
-        label: 'Total number of sales{% if item_name %} {{ item_name }} {% endif %}',
+        label: 'Total number of sales{% if item_name is not None %} {{ item_name }} {% endif %}',
         data: [{% for sale_count in data %} {{ sale_count }}, {% endfor %}],
         borderWidth: 1
       }]
