@@ -6,6 +6,33 @@ from django.db.models import Count
 import catalog.models
 from .forms import ChartForm
 
+# print("--------------- TEST IN STATS ---------------")
+#
+# items = catalog.models.Item.objects.all().order_by("id")
+# choices = []
+#
+# for item in items:
+#     choices.append((item.id, str(item)))
+#
+# print(choices)
+#
+# # print(items)
+#
+# print("---------------------------------------------")
+
+
+@staff_member_required(login_url="accounts:login", redirect_field_name='next')
+def get_stats(request, item_id):
+
+    labels = []
+    data = []
+
+    return render(request, "stats/charts.html", context={
+        "labels": labels,
+        "data": data,
+        "form": ChartForm
+    })
+
 
 @staff_member_required(login_url="accounts:login", redirect_field_name='next')
 def get_total_sales(request):

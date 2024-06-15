@@ -1,8 +1,11 @@
 from django import forms
+import catalog.models
 
 class ChartForm(forms.Form):
-    # template_name = "stats/form_snippet.html"
+    CHOICES = [(0, "-- Выберите товар --")]
 
-    # TODO: make select for all item in catalog
-    CHOICES = (('Option 1', 'Option 1'),('Option 2', 'Option 2'),)
+    items = catalog.models.Item.objects.all().order_by("id")
+    for item in items:
+        CHOICES.append((item.id, str(item)))
+
     item_field = forms.ChoiceField(label="Выберите товар", choices=CHOICES)
