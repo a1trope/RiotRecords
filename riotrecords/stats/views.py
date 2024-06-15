@@ -9,6 +9,7 @@ from .forms import ChartForm
 
 @staff_member_required(login_url="accounts:login", redirect_field_name='next')
 def get_total_sales(request):
+    # TODO: Получить кол-во всех проданных предметов по дням, а не кол-во заказов
     # В orders хранится пары <дата с точностью до дня, сколько заказов выполнено в этот день>
     orders = (catalog.models.Order.objects
               .filter(status="DE")
@@ -35,7 +36,7 @@ def get_total_sales(request):
 
 @staff_member_required(login_url="accounts:login", redirect_field_name='next')
 def get_item_sales(request, item_id):
-    # TODO: render new chart depend on form
+    # TODO: Получить кол-во проданного предмета по дням, а не кол-во заказов
 
     # Orders with specified item
     orders_id = (catalog.models.OrderItem.objects
