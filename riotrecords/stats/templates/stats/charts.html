@@ -1,6 +1,8 @@
 {% extends "admin/base_site.html" %}
 
 {% block content %}
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 
 <form action="{% url 'stats:get_total_sales' %}" method="post">
   {% csrf_token %}
@@ -8,8 +10,8 @@
   <input type="submit" value="Отрисовать чарт продаж">
 </form>
 
-<div>
-  <canvas id="myChart"></canvas>
+<div class="d-flex justify-content-center align-items-center full-height">
+  <canvas id="myChart" width="800" height="300"></canvas>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -20,14 +22,15 @@
   new Chart(ctx, {
     type: 'bar',
     data: {
-      labels: [{% for label in labels %} "{{label}}", {% endfor %}], // ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: [{% for label in labels %} "{{label}}", {% endfor %}],
       datasets: [{
         label: 'Total number of sales{% if item_name %} {{ item_name }} {% endif %}',
-        data: [{% for sale_count in data %} {{ sale_count }}, {% endfor %}], // [12, 19, 3, 5, 2, 3],
+        data: [{% for sale_count in data %} {{ sale_count }}, {% endfor %}],
         borderWidth: 1
       }]
     },
     options: {
+      responsive: false,
       scales: {
         y: {
           beginAtZero: true
@@ -36,4 +39,5 @@
     }
   });
 </script>
+
 {% endblock %}
