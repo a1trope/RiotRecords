@@ -16,13 +16,13 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in cart_items %}
+            {% for cart_item in cart_items %}
                 <tr>
-                    <td>{{ item.item.album_name }}</td>
-                    <td>{{ item.item.band_name }}</td>
-                    <td>{{ item.item.price }} руб.</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.quantity * item.item.price }} руб.</td>
+                    <td>{{ cart_item.item.album_name }}</td>
+                    <td>{{ cart_item.item.band_name }}</td>
+                    <td>{{ cart_item.item.price }} руб.</td>
+                    <td>{{ cart_item.quantity }}</td>
+                    <td>{% widthratio cart_item.quantity 1 cart_item.item.price %} руб.</td>
                 </tr>
             {% endfor %}
         </tbody>
