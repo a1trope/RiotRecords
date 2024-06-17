@@ -1,0 +1,38 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>{{ item.album_name }}</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>{{ item.album_name }}</h1>-->
+<!--    <p>Исполнитель: {{ item.band_name }}</p>-->
+<!--    <p>Цена: {{ item.price }} руб.</p>-->
+<!--    <p>Год: {{ item.year }}</p>-->
+
+<!--    <form action="{% url 'add_to_cart' item.id %}" method="post">-->
+<!--        {% csrf_token %}-->
+<!--        {{ form.as_p }}-->
+<!--        <button type="submit">Добавить в корзину</button>-->
+<!--    </form>-->
+<!--</body>-->
+<!--</html>-->
+{% extends 'base.html' %}
+
+{% block title %}{{ item.album_name }}{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>{{ item.album_name }}</h1>
+    <p>Исполнитель: {{ item.band_name }}</p>
+    <p>Цена: {{ item.price }} руб.</п>
+    <п>Год: {{ item.year }}</п>
+
+    <form action="{% url 'cart:add_to_cart' item.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Добавить в корзину</button>
+    </form>
+
+    <a href="{% url 'cart:cart_detail' %}" class="btn btn-secondary mt-3">Перейти в корзину</a>
+</div>
+{% endblock content %}
