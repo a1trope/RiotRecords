@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Корзина{% endblock title %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Ваша корзина</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Название альбома</th>
+                <th>Исполнитель</th>
+                <th>Цена</th>
+                <th>Количество</th>
+                <th>Сумма</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.item.album_name }}</td>
+                    <td>{{ item.item.band_name }}</td>
+                    <td>{{ item.item.price }} руб.</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.quantity * item.item.price }} руб.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{% url 'catalog:index' %}" class="btn btn-secondary">Продолжить покупки</a>
+</div>
+{% endblock content %}
