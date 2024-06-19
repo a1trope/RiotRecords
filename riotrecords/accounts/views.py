@@ -2,7 +2,8 @@ from django.contrib.auth import logout, authenticate, login
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-
+from catalog.models import Order
+from django.contrib.auth.decorators import login_required
 
 def login_user(request):
 
@@ -54,3 +55,10 @@ def register_user(request):
             })
 
     return render(request, "accounts/registration.html")
+
+
+
+@login_required(login_url="accounts:login")
+def profile(request):
+    orders = Order.objects.filter(user=request.user)
+    return render(request, "accounts/profile.html", {'orders': orders})
