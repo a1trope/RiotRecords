@@ -22,7 +22,7 @@
                 <div class="card-body" id="{{ item.id }}">
                     <h5 class="card-title">{{ item.album_name }}</h5>
                     <p class="card-text">Исполнитель: {{ item.band_name }}</p>
-                    <button class="btn btn-primary add-to-cart">Добавить в корзину</button>
+                    <a class="btn btn-primary add-to-cart" href="{% url 'cart:add_to_cart' item.id %}">Добавить в корзину</a>
                 </div>
             </div>
         </div>

@@ -11,4 +11,5 @@ def cart_detail(request):
 @login_required
 def add_to_cart(request, item_id):
     item = get_object_or_404(Item, id=item_id)
-    return render(request, 'catalog/detail.html', {'item': item})
+
+    return redirect("catalog:index")
