@@ -19,9 +19,9 @@ class Order(models.Model):
         "SH": "shipped",
         "DE": "delivered",
     }
-    status = models.CharField(max_length=30, choices=ORDER_STATUS)
+    status = models.CharField(max_length=30, choices=ORDER_STATUS, default="PD")
     address = models.CharField(max_length=200)
-    time = models.DateTimeField()
+    time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"Order {self.id} (user={self.user})"
