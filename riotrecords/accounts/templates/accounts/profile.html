@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Ваш профиль</h1>
+    <h2>Ваши заказы</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID заказа</th>
+                <th>Статус</th>
+                <th>Адрес</th>
+                <th>Дата</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.get_status_display }}</td>
+                    <td>{{ order.address }}</td>
+                    <td>{{ order.time }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
