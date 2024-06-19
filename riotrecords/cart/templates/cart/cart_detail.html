@@ -11,8 +11,6 @@
                 <th>Название альбома</th>
                 <th>Исполнитель</th>
                 <th>Цена</th>
-                <th>Количество</th>
-                <th>Сумма</th>
             </tr>
         </thead>
         <tbody>
@@ -21,8 +19,6 @@
                     <td>{{ cart_item.item.album_name }}</td>
                     <td>{{ cart_item.item.band_name }}</td>
                     <td>{{ cart_item.item.price }} руб.</td>
-                    <td>{{ cart_item.quantity }}</td>
-                    <td>{% widthratio cart_item.quantity 1 cart_item.item.price %} руб.</td>
                 </tr>
             {% endfor %}
         </tbody>
