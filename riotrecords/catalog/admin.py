@@ -18,6 +18,16 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ["id", "user", "status", "address", "time"]
     inlines = [OrderItemAdminInline]
 
+    def changeform_view(self, request, *args, **kwargs):
+        self.readonly_fields = list(self.readonly_fields)
+
+        if request.user.groups.filter(name="Stuff").exists():  # or another condition
+            self.readonly_fields.append('user')
+            self.readonly_fields.append('address')
+            self.readonly_fields.append('time')
+
+        return super(OrderAdmin, self).changeform_view(request, *args, **kwargs)
+
 
 admin.site.register(Item, ItemAdmin)
 admin.site.register(Order, OrderAdmin)
