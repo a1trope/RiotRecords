@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import CartItem
-from catalog.models import Item
+from catalog.models import Item, Order, OrderItem
 from django.contrib.auth.decorators import login_required
+from .forms import OrderForm
+from .models import CartItem
+
 
 @login_required(login_url="accounts:login")
 def cart_detail(request):
@@ -27,3 +30,31 @@ def delete_from_cart(request, cartitem_id):
     cart_item.delete()
 
     return redirect("cart:cart_detail")
+
+
+@login_required(login_url="accounts:login")
+def order(request):
+    if request.method == "POST":
+        user = request.user
+        address = request.POST["address"]
+
+        # Create order
+        order = Order.objects.create(user=user, address=address)
+        order.save()
+
+        # Get user cart items
+        cart_items = CartItem.objects.filter(user=user)
+
+        # Create order items
+        for cart_item in cart_items:
+            order_item = OrderItem.objects.create(order=order, item=cart_item.item)
+            order_item.save()
+
+        # Clear cart for current user
+        cart_items.delete()
+
+        return render(request, 'cart/success_order.html')
+
+    form = OrderForm()
+    return render(request, 'cart/order.html', {'form': form})
+
