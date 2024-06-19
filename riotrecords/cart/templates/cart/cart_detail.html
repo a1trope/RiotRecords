@@ -19,7 +19,7 @@
                     <td>{{ cart_item.item.album_name }}</td>
                     <td>{{ cart_item.item.band_name }}</td>
                     <td>{{ cart_item.item.price }} руб.</td>
-                    <td><a href="{% url 'cart:delete_from_cart' cart_item.id %}" class="btn btn-secondary">Удалить</a></td>
+                    <td><a href="{% url 'cart:delete_from_cart' cart_item.id %}" class="btn btn-danger">Удалить</a></td>
                 </tr>
             {% endfor %}
         </tbody>
