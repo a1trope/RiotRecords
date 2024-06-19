@@ -21,10 +21,8 @@ class OrderAdmin(admin.ModelAdmin):
     def changeform_view(self, request, *args, **kwargs):
         self.readonly_fields = list(self.readonly_fields)
 
-        if request.user.groups.filter(name="Stuff").exists():  # or another condition
-            self.readonly_fields.append('user')
-            self.readonly_fields.append('address')
-            self.readonly_fields.append('time')
+        if not request.user.is_superuser and request.user.groups.filter(name="Stuff").exists():
+            self.readonly_fields = ["user", "address", "time"]
 
         return super(OrderAdmin, self).changeform_view(request, *args, **kwargs)
 
