@@ -23,7 +23,7 @@
                     <h5 class="card-title">{{ item.album_name }}</h5>
                     <p class="card-text">Исполнитель: {{ item.band_name }}</p>
                     <p class="card-text">Год выпуска: {{ item.year }}</p>
-                    <p class="card-text">Цена: {{ item.price }}</p>
+                    <p class="card-text">Цена: {{ item.price }} $</p>
                     <a class="btn btn-primary add-to-cart" href="{% url 'cart:add_to_cart' item.id %}">Добавить в корзину</a>
                 </div>
             </div>
