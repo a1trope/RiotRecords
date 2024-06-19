@@ -38,12 +38,15 @@ def order(request):
         user = request.user
         address = request.POST["address"]
 
+        # Get user cart items
+        cart_items = CartItem.objects.filter(user=user)
+
+        if len(cart_items) < 1:
+            return render(request, 'cart/order.html', {'error_msg': "У вас пустая корзина"})
+
         # Create order
         order = Order.objects.create(user=user, address=address)
         order.save()
-
-        # Get user cart items
-        cart_items = CartItem.objects.filter(user=user)
 
         # Create order items
         for cart_item in cart_items:

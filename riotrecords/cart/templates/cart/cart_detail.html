@@ -25,6 +25,6 @@
         </tbody>
     </table>
     <a href="{% url 'catalog:index' %}" class="btn btn-secondary">Продолжить покупки</a>
-    <a href="{% url 'cart:order' %}" class="btn btn-primary">Оформить заказ</a>
+    <a href="{% url 'cart:order' %}" class="btn btn-primary {% if cart_items|length < 1 %} disabled {% endif %}">Оформить заказ</a>
 </div>
 {% endblock content %}
