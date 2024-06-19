@@ -19,3 +19,12 @@ def add_to_cart(request, item_id):
     cart_item.save()
 
     return redirect("catalog:index")
+
+
+@login_required
+def delete_from_cart(request, cartitem_id):
+    user = request.user
+    cart_item = get_object_or_404(CartItem, id=cartitem_id, user=user)
+    cart_item.delete()
+
+    return redirect("cart:cart_detail")
