@@ -18,7 +18,9 @@ def get_sales_info(item_id=0):
                 f"SELECT TO_CHAR(DATE_TRUNC('day', catalog_order.time), 'DD/MM/YYYY') d, COUNT(catalog_orderitem.item_id) sales_count \
                 FROM catalog_orderitem JOIN catalog_order ON catalog_orderitem.order_id = catalog_order.id \
                 WHERE item_id = {item_id} \
-                GROUP BY catalog_orderitem.item_id, d"
+                GROUP BY catalog_orderitem.item_id, d \
+                ORDER BY d \
+                "
             )
             rows = cursor.fetchall()
 
@@ -33,7 +35,8 @@ def get_sales_info(item_id=0):
             cursor.execute(
                 "SELECT TO_CHAR(DATE_TRUNC('day', catalog_order.time), 'DD/MM/YYYY') d, COUNT(catalog_orderitem.item_id) sales_count \
                 FROM catalog_orderitem JOIN catalog_order ON catalog_orderitem.order_id = catalog_order.id \
-                GROUP BY d"
+                GROUP BY d \
+                ORDER BY d"
             )
             rows = cursor.fetchall()
 
