@@ -19,8 +19,6 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemAdminInline]
 
     def changeform_view(self, request, *args, **kwargs):
-        self.readonly_fields = list(self.readonly_fields)
-
         if not request.user.is_superuser and request.user.groups.filter(name="Stuff").exists():
             self.readonly_fields = ["user", "address", "time"]
 
